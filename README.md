@@ -26,7 +26,11 @@
 
 ```ts
 npm install trpc-qwik-city
-os
+```
+
+or
+
+```ts
 yarn add trpc-qwik-city
 ```
 

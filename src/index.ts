@@ -1,14 +1,13 @@
+import { RequestContext } from '@builder.io/qwik-city';
 import type { AnyRouter } from '@trpc/server';
 import { resolveHTTPResponse } from '@trpc/server';
-import { RequestContext } from './types';
+import { HTTPHeaders } from '@trpc/server/dist/declarations/src/http/internals/types';
 
 export const resolveTRPCResponse = async <Router extends AnyRouter>({
   request,
-  params,
   router,
 }: {
   request: RequestContext;
-  params: Record<string, string>;
   router: Router;
 }): Promise<Response> => {
   const { searchParams: query, pathname } = new URL(request.url);
@@ -17,7 +16,7 @@ export const resolveTRPCResponse = async <Router extends AnyRouter>({
   const path = pathname.replace('api/trpc/', '').replace('/', '');
   const req = {
     method: request.method,
-    headers: request.headers,
+    headers: request.headers as unknown as HTTPHeaders,
     query,
     body: await request.text(),
   };
